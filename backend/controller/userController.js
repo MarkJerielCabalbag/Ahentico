@@ -12,11 +12,13 @@ const __dirname = dirname(fileURLToPath(import.meta.url));
 //@route     POST /api/flowStock/register
 //@access    private
 const register = asyncHandler(async (req, res, next) => {
-  const { email, username, password } = req.body;
+  const { username, email, password } = req.body;
 
   if (!email || !username || !password) {
     return res.status(400).json({ message: "Please fill all fields" });
   }
+
+  console.log(email, username, password);
 
   const user = await User.findOne({ email: email });
 
@@ -24,7 +26,7 @@ const register = asyncHandler(async (req, res, next) => {
     return res.status(400).json({ message: "Account is already registered" });
   }
 
-  const profileDir = path.join("profile", user_email);
+  const profileDir = path.join("profile", email);
   fs.mkdirSync(profileDir, {
     recursive: true,
   });
@@ -33,7 +35,7 @@ const register = asyncHandler(async (req, res, next) => {
   const srcImgResolvePath = path.join(profileDir, "R.png");
   fs.copyFileSync(srcImg, srcImgResolvePath);
 
-  const hashPassword = await bcrypt.hash(password, 20);
+  const hashPassword = await bcrypt.hash(password, 10);
 
   const newUser = new User({
     email: email,
@@ -66,16 +68,18 @@ const login = asyncHandler(async (req, res, next) => {
     return res.status(400).json({ message: "Please fill all fields" });
   }
 
-  const user = await User.findOne({ email: email });
+  const user = await User.findOne({ email });
 
   if (!user) {
-    return res.status(400).json({ message: "Account not registered yet" });
+    return res.status(400).json({ message: "Account does not exist" });
   }
 
   if (user && (await bcrypt.compare(password, user.password))) {
     return res.status(200).json({
       message: `Welcome ${user.username}`,
     });
+  } else {
+    return res.status(400).json({ message: "Invalid email or password" });
   }
 });
 
