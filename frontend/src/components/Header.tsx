@@ -6,8 +6,8 @@ const Header = () => {
     <div className="flex justify-between items-center">
       <h1 className="text-2xl">flowStock</h1>
       <div className="flex gap-2">
-        <Link to={"/home"}>Home</Link>
-        <Link to={"/home/distributor"}>Distributor</Link>
+        <Link to={"/flowStock"}>Home</Link>
+        <Link to={"/flowStock/distributor"}>Distributor</Link>
       </div>
     </div>
   );

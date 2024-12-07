@@ -31,7 +31,7 @@ export const useLogin = (onError?: () => void, onSuccess?: () => void) => {
     onSuccess: (data) => {
       toast.success(data.message);
       localStorage.setItem("isLoggedIn", "true");
-      navigate("/home");
+      navigate("/flowStock");
       onSuccess?.();
     },
   });

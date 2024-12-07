@@ -22,9 +22,9 @@ const router = createBrowserRouter(
     <Route path="/" element={<App />}>
       <Route index={true} path="/" element={<Auth />} />
       <Route path="" element={<PrivateRoute />}>
-        <Route path="/home" element={<Pages />}>
-          <Route path="/home" index={true} element={<Home />} />
-          <Route path="/home/distributor" element={<Distributor />} />
+        <Route path="/flowStock" element={<Pages />}>
+          <Route path="/flowStock" index={true} element={<Home />} />
+          <Route path="/flowStock/distributor" element={<Distributor />} />
         </Route>
       </Route>
     </Route>
