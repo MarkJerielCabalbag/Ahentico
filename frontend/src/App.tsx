@@ -1,19 +1,10 @@
-import { Toaster } from "react-hot-toast";
-import { Outlet } from "react-router-dom";
+import { Button } from "@mui/material";
+import React from "react";
 
 function App() {
   return (
-    <div className="mx-10">
-      <Outlet />
-
-      {
-        <Toaster
-          position="bottom-center"
-          toastOptions={{
-            duration: 3000,
-          }}
-        />
-      }
+    <div>
+      <Button>Hi</Button>
     </div>
   );
 }
