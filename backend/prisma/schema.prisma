@@ -18,6 +18,29 @@ model User {
   email String @unique
   username String 
   password String 
+  ahentes Ahente[]
+}
+
+model Ahente {
+  id Int @id @default(autoincrement())
+  name String
+  company String?
+  contact Int?
+  productCoverage String
+  addedBy User  @relation(fields: [userId], references: [id])
+  userId Int
+  products Product[]
+}
+
+model Product{
+  id Int @id @default(autoincrement())
+  productName String
+  productCategory String
+  productUnitMeasurement String
+  productPricePerUnit Int
+  productDescription String
+  productDesignatedBy Ahente @relation(fields: [ahenteId], references: [id])
+  ahenteId Int
 }
 
 
