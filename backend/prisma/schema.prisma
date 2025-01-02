@@ -37,6 +37,7 @@ model Product{
   productName String
   productCategory String
   productUnitMeasurement String
+  productUnit Int
   productPricePerUnit Int
   productDescription String
   productDesignatedBy Ahente @relation(fields: [ahenteId], references: [id])

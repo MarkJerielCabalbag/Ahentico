@@ -1,6 +1,5 @@
 import asyncHandler from "express-async-handler";
 import { PrismaClient } from "@prisma/client";
-import { connect } from "http2";
 
 const prisma = new PrismaClient();
 
@@ -74,5 +73,93 @@ const editAhente = asyncHandler(async (req, res, next) => {
 //@DESC     remove ahente
 //@ROUTE    POST /api/agentify/ahente/del/:ahenteId
 //@ACCESS   private
+const removeAhente = asyncHandler(async (req, res, next) => {
+  const { ahenteId } = req.params;
 
-export default { registerAhente, editAhente };
+  if (!ahenteId) {
+    return res.status(400).json({ message: "Id is required" });
+  }
+
+  const findAhente = await prisma.ahente.findUnique({
+    where: {
+      id: parseInt(ahenteId),
+    },
+  });
+
+  if (!findAhente) {
+    return res
+      .status(400)
+      .json({ message: `Ahente with id ${ahenteId} does not exist` });
+  }
+
+  const ahente = await prisma.ahente.delete({
+    where: {
+      id: parseInt(ahenteId),
+    },
+  });
+
+  return res
+    .status(200)
+    .json({ message: `You remove ${ahente.name} as your distributor` });
+});
+
+//@DESC     view list of ahentes associated with user
+//@ROUTE    GET /api/agentify/ahente/list/:userId
+//@ACCESS   private
+const viewAhentes = asyncHandler(async (req, res, next) => {
+  const { userId } = req.params;
+
+  if (!userId) {
+    return res.status(400).json({ message: "Id is required" });
+  }
+
+  const user = await prisma.user.findUnique({
+    where: {
+      id: parseInt(userId),
+    },
+  });
+
+  if (!user) {
+    return res.status(400).json({ message: `${userId} does not exist` });
+  }
+
+  const ahentes = await prisma.ahente.findMany({
+    where: {
+      userId: parseInt(userId),
+    },
+  });
+
+  return res
+    .status(200)
+    .send(ahentes > 0 ? "There are ahentes listed!" : ahentes);
+});
+
+//@DESC     view ahente associated with user
+//@ROUTE    GET /api/agentify/ahente/view/:ahenteId
+//@ACCESS   private
+const viewAhente = asyncHandler(async (req, res, next) => {
+  const { ahenteId } = req.params;
+
+  if (!ahenteId) {
+    return res.status(400).json({ message: "Id is required" });
+  }
+
+  const ahente = await prisma.ahente.findUnique({
+    where: {
+      id: parseInt(ahenteId),
+    },
+  });
+
+  if (!ahente) {
+    return res.status(400).json({ message: "Id does not exist" });
+  }
+
+  return res.status(200).send(ahente);
+});
+export default {
+  registerAhente,
+  editAhente,
+  removeAhente,
+  viewAhentes,
+  viewAhente,
+};
