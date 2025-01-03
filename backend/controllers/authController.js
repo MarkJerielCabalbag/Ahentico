@@ -70,12 +70,39 @@ const userLogin = asyncHandler(async (req, res, next) => {
   }
 
   if (userExist && (await bcrypt.compare(password, userExist.password))) {
-    return res
-      .status(200)
-      .json({ message: `Greetings ${userExist.username}!` });
+    return res.status(200).json({
+      message: `Greetings ${userExist.username}!`,
+      id: `${userExist.id}`,
+    });
   } else {
     return res.status(400).json({ message: "email or password is incorrect!" });
   }
 });
 
-export default { userRegister, userLogin };
+//@DESC     get user info
+//@ROUTE    POST /api/agentify/auth/me/:id
+//@ACCESS   private
+const userInfo = asyncHandler(async (req, res, next) => {
+  const { id } = req.params;
+
+  if (!id) {
+    return res.status(400).json({ message: "Id is required" });
+  }
+
+  const user = await prisma.user.findUnique({
+    where: {
+      id: parseInt(id),
+    },
+    include: {
+      password: false,
+    },
+  });
+
+  if (!user) {
+    return res.status(400).json({ message: "Id does not exist" });
+  }
+
+  return res.status(200).send(user);
+});
+
+export default { userRegister, userLogin, userInfo };

@@ -3,7 +3,7 @@ import { Outlet } from "react-router-dom";
 
 function App() {
   return (
-    <div className="container mx-auto h-full w-full">
+    <div className="h-full w-full">
       <Outlet />
       <Toaster
         position="top-center"
