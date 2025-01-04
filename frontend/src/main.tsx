@@ -11,19 +11,23 @@ import {
 import Auth from "./auth/Auth.tsx";
 import SignUp from "./auth/SignUp.tsx";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import Home from "./pages/Home.tsx";
+import Layout from "./pages/Layout.tsx";
 import Ahente from "./pages/Ahente.tsx";
+import Home from "./pages/Home.tsx";
 
 const queryClient = new QueryClient();
 
 const router = createBrowserRouter(
   createRoutesFromElements(
     <Route path="/" element={<App />}>
-      <Route path="/" index element={<Auth />} />
+      {/* Public Routes */}
+      <Route index path="/" element={<Auth />} />
       <Route path="/register" element={<SignUp />} />
-      <Route path="">
-        <Route index={true} path="/home/:id" element={<Home />} />
-        <Route path="/ahente/:id" element={<Ahente />} />
+
+      {/* Routes with Layout Wrapper */}
+      <Route path="/" element={<Layout />}>
+        <Route path="home/:id" element={<Home />} />
+        <Route path="ahente/:id" element={<Ahente />} />
       </Route>
     </Route>
   )
