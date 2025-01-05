@@ -1,5 +1,5 @@
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
-import { User } from "../types/types";
+import { ID, User } from "../types/types";
 import { client } from "../api/client";
 import toast from "react-hot-toast";
 import { useNavigate } from "react-router-dom";
@@ -43,8 +43,16 @@ const useGetUserInfo = (id: string) => {
   });
 };
 
+const useGetAhentes = (id: string) => {
+  return useQuery({
+    queryKey: ["ahentes"],
+    queryFn: () => client.viewAhentes(id),
+  });
+};
+
 export const hooks = {
   useRegisterUser,
   useLoginUser,
   useGetUserInfo,
+  useGetAhentes,
 };

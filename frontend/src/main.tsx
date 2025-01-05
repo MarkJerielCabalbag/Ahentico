@@ -11,7 +11,7 @@ import {
 import Auth from "./auth/Auth.tsx";
 import SignUp from "./auth/SignUp.tsx";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import Layout from "./pages/Layout.tsx";
+import Layout from "./components/Layout.tsx";
 import Ahente from "./pages/Ahente.tsx";
 import Home from "./pages/Home.tsx";
 

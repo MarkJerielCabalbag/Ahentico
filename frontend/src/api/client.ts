@@ -51,4 +51,20 @@ export const client = {
       return response;
     });
   },
+
+  //view list of ahentes
+  async viewAhentes(id: string) {
+    return await fetch(`${baseUrl}/ahente/list/${id}`, {
+      method: "GET",
+      headers: { "Content-Type": "application/json" },
+    }).then(async (res) => {
+      const response = await res.json();
+
+      if (!res.ok) {
+        throw new Error(response.message || "An Error Occured");
+      }
+
+      return response;
+    });
+  },
 };
