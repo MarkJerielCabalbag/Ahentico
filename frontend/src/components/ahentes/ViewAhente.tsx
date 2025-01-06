@@ -1,8 +1,8 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import { useParams } from "react-router-dom";
 import { hooks } from "../../hooks/hooks";
 import { Building, Contact, ShoppingCart } from "lucide-react";
-import { Button } from "react-daisyui";
+import { Button } from "@material-tailwind/react";
 import EditAhente from "../modals/EditAhente";
 import RemoveAhente from "../modals/RemoveAhente";
 
@@ -54,7 +54,8 @@ const ViewAhente = () => {
 
         <div className="flex gap-2 justify-end">
           <Button
-            className="bg-sky-500 text-black"
+            className="filled"
+            color="blue"
             onClick={() => setShowModals({ ...showModals, editModal: true })}
           >
             Edit Ahente

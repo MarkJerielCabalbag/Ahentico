@@ -1,4 +1,4 @@
-import { Alert, Button, Input, Loading, Modal } from "react-daisyui";
+import { Alert, Button, Input, Loading, Modal } from "@material-tailwind/react";
 import { Ahente, ModalType } from "../../types/types";
 import { useState } from "react";
 import { hooks } from "../../hooks/hooks";

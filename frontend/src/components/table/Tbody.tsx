@@ -1,7 +1,7 @@
 import { useNavigate, useParams } from "react-router-dom";
 import { hooks } from "../../hooks/hooks";
 import { Ahente, ID } from "../../types/types";
-import { Table } from "react-daisyui";
+import { Table } from "@material-tailwind/react";
 
 const Tbody = () => {
   const navigate = useNavigate();

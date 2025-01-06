@@ -1,6 +1,6 @@
 import React from "react";
 import { ModalType } from "../../types/types";
-import { Button, Modal } from "react-daisyui";
+import { Button, Modal } from "@material-tailwind/react";
 
 const EditAhente = ({ visible, toggleVisible }: ModalType) => {
   return (

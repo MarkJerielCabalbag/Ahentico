@@ -1,5 +1,5 @@
 import React from "react";
-import { Table } from "react-daisyui";
+import { Table } from "@material-tailwind/react";
 
 const Thead = () => {
   return (

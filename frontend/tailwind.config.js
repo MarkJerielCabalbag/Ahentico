@@ -1,9 +1,12 @@
 /** @type {import('tailwindcss').Config} */
-import daisyui from "daisyui";
-export default {
+const withMT = require("@material-tailwind/react/utils/withMT");
+
+const config = {
   content: ["./index.html", "./src/**/*.{js,ts,jsx,tsx}"],
   theme: {
     extend: {},
   },
-  plugins: [daisyui],
+  plugins: [],
 };
+
+module.exports = withMT(config);

@@ -1,10 +1,9 @@
 import { Plus } from "lucide-react";
 import Thead from "../table/Thead";
 import Tbody from "../table/Tbody";
-import { ID } from "../../types/types";
-import { useCallback, useRef, useState } from "react";
+import { useState } from "react";
 import AddAhente from "../modals/AddAhente";
-import { Button, Modal, Table } from "react-daisyui";
+import { Button } from "@material-tailwind/react";
 const ViewAhentes = () => {
   const [visible, setVisible] = useState<boolean>(false);
   const toggleVisible = () => {

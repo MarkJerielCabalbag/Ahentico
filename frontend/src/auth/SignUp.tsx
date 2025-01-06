@@ -3,6 +3,8 @@ import { User } from "../types/types";
 import { useState } from "react";
 import React from "react";
 import { hooks } from "../hooks/hooks";
+import { Button, Input } from "@material-tailwind/react";
+import type { InputProps } from "@material-tailwind/react";
 
 const SignUp = () => {
   const [user, setUser] = useState<User>({
@@ -18,89 +20,42 @@ const SignUp = () => {
   const { mutateAsync, isError, error, isPending } = hooks.useRegisterUser();
   return (
     <div className="flex justify-center items-center h-screen">
-      <div className="flex flex-col gap-3 w-2/4 p-10">
-        <div className="flex w-full flex-col">
-          <h1 className="text-3xl font-extrabold text-primary text-center">
-            Ahentico
-          </h1>
+      <div className="flex flex-col gap-3 w-2/6 p-10">
+        <div className="flex w-full flex-col gap-4">
+          <h1 className="text-3xl font-extrabold text-center">Ahentico</h1>
           <p className="italic opacity-70 text-center">
             Lorem ipsum dolor, sit amet consectetur adipisicing elit. Quo, eos?
           </p>
 
-          <div className="divider divider-neutral"></div>
+          <Input
+            type="text"
+            value={user?.username}
+            name="username"
+            onChange={handleChange}
+            label="Username"
+          />
 
-          <label className="form-control w-full">
-            <div className="label">
-              <span className="label-text flex items-center gap-2 text-md">
-                Username
-              </span>
-            </div>
-            <input
-              type="text"
-              value={user?.username}
-              name="username"
-              onChange={handleChange}
-              placeholder="Type here"
-              className={`${
-                isError ? "input-error" : ""
-              } input input-primary w-full`}
-            />
-            <div className="label">
-              <span className="label-text-alt text-red-500">
-                {isError && error.message}
-              </span>
-            </div>
-          </label>
+          <Input
+            type="email"
+            value={user?.email}
+            name="email"
+            onChange={handleChange}
+            label="Email"
+          />
 
-          <label className="form-control w-full">
-            <div className="label">
-              <span className="label-text flex items-center gap-2 text-md">
-                Email
-              </span>
-            </div>
-            <input
-              type="email"
-              name="email"
-              value={user?.email}
-              onChange={handleChange}
-              placeholder="Type here"
-              className={`${
-                isError ? "input-error" : ""
-              } input input-primary w-full`}
-            />
-            <div className="label">
-              <span className="label-text-alt text-red-500">
-                {isError && error.message}
-              </span>
-            </div>
-          </label>
+          <Input
+            type="password"
+            name="password"
+            value={user?.password}
+            onChange={handleChange}
+            label="Password"
+          />
 
-          <label className="form-control w-full">
-            <div className="label">
-              <span className="label-text flex gap-2 items-center">
-                Password
-              </span>
-            </div>
-            <input
-              type="password"
-              name="password"
-              value={user?.password}
-              onChange={handleChange}
-              placeholder="Type here"
-              className={`${
-                isError ? "input-error" : ""
-              } input input-primary w-full`}
-            />
-            <div className="label">
-              <span className="label-text-alt text-red-500">
-                {isError && error.message}
-              </span>
-            </div>
-          </label>
-          <div className="flex w-full flex-col">
-            <button
+          <div className="flex flex-col gap-2">
+            <Button
+              className="w-full"
               disabled={isPending}
-              className="btn btn-primary"
+              loading={isPending}
               onClick={async () => {
                 try {
                   await mutateAsync({
@@ -111,19 +66,12 @@ const SignUp = () => {
                 } catch (error) {}
               }}
             >
-              {isPending ? (
-                <span className="loading loading-bars loading-xs"></span>
-              ) : (
-                "Register"
-              )}
-            </button>
-            <div className="divider divider-neutral"></div>
-            <a
-              className="link link-primary text-center"
-              onClick={() => navigate("/")}
-            >
+              Register
+            </Button>
+
+            <Button variant="text" onClick={() => navigate("/")}>
               Already have an account? Login here!
-            </a>
+            </Button>
           </div>
         </div>
       </div>
