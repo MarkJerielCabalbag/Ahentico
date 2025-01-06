@@ -2,13 +2,14 @@ import { Plus } from "lucide-react";
 import Thead from "../table/Thead";
 import Tbody from "../table/Tbody";
 import { ID } from "../../types/types";
-import { useState } from "react";
+import { useCallback, useRef, useState } from "react";
 import AddAhente from "../modals/AddAhente";
-import { Button } from "react-daisyui";
-const ViewAhentes = ({ id }: ID) => {
-  const [open, onOpenChange] = useState<boolean>();
-
-  const toggleModal = (open: boolean) => onOpenChange(!open);
+import { Button, Modal, Table } from "react-daisyui";
+const ViewAhentes = () => {
+  const [visible, setVisible] = useState<boolean>(false);
+  const toggleVisible = () => {
+    setVisible(!visible);
+  };
 
   return (
     <div>
@@ -19,15 +20,17 @@ const ViewAhentes = ({ id }: ID) => {
         aliquam, placeat, est necessitatibus fuga porro, labore voluptates
         voluptas consequatur modi!
       </p>
-      <Button className="btn btn-primary" onClick={() => onOpenChange(!open)}>
+
+      <Button className="btn btn-primary" onClick={toggleVisible}>
         <Plus />
-        Add Ahente
+        Register New Ahente
       </Button>
-      {open && <AddAhente open={open} onOpenChange={toggleModal} />}
-      <table className="table">
+      {visible && <AddAhente visible={visible} toggleVisible={toggleVisible} />}
+
+      <Table className="table">
         <Thead />
-        <Tbody id={id} />
-      </table>
+        <Tbody />
+      </Table>
     </div>
   );
 };

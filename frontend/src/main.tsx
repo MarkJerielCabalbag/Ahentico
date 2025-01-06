@@ -14,6 +14,7 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import Layout from "./components/Layout.tsx";
 import Ahente from "./pages/Ahente.tsx";
 import Home from "./pages/Home.tsx";
+import ViewAhente from "./components/ahentes/ViewAhente.tsx";
 
 const queryClient = new QueryClient();
 
@@ -26,8 +27,9 @@ const router = createBrowserRouter(
 
       {/* Routes with Layout Wrapper */}
       <Route path="/" element={<Layout />}>
-        <Route path="home/:id" element={<Home />} />
-        <Route path="ahente/:id" element={<Ahente />} />
+        <Route path="/home/:id" element={<Home />} />
+        <Route path="/ahente/:id" element={<Ahente />} />
+        <Route path="/ahente/:id/profile/:ahenteId" element={<ViewAhente />} />
       </Route>
     </Route>
   )

@@ -11,7 +11,7 @@ export type Ahente = {
   name: string;
   company: string;
   contact: string;
-  productivityCoverage: string;
+  productCoverage: string;
   userId?: number;
 };
 
@@ -22,6 +22,6 @@ export type ID = {
 export type ModalType = {
   header?: string;
   body?: React.ReactNode;
-  open: boolean;
-  onOpenChange: (open: boolean) => void;
+  visible: boolean;
+  toggleVisible: (open: boolean) => void;
 };

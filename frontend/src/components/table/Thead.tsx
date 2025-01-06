@@ -1,15 +1,14 @@
 import React from "react";
+import { Table } from "react-daisyui";
 
 const Thead = () => {
   return (
-    <thead>
-      <tr>
-        <th></th>
-        <th>Name</th>
-        <th>Comapny</th>
-        <th>Contact</th>
-      </tr>
-    </thead>
+    <Table.Head>
+      <span></span>
+      <span>Name</span>
+      <span>Comapny</span>
+      <span>Contact</span>
+    </Table.Head>
   );
 };
 

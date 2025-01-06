@@ -1,38 +1,45 @@
+import { useNavigate, useParams } from "react-router-dom";
 import { hooks } from "../../hooks/hooks";
 import { Ahente, ID } from "../../types/types";
+import { Table } from "react-daisyui";
 
-const Tbody = ({ id }: ID) => {
+const Tbody = () => {
+  const navigate = useNavigate();
+  const { id } = useParams();
   const { data, isLoading, isPending } = hooks.useGetAhentes(id);
 
   return (
-    <tbody>
+    <Table.Body>
       {data?.map((ahente: Ahente) => (
-        <tr>
-          <td></td>
-          <td>
+        <Table.Row
+          key={ahente.id}
+          onClick={() => navigate(`/ahente/${id}/profile/${ahente.id}`)}
+        >
+          <span></span>
+          <span>
             {isLoading || isPending ? (
               <div className="skeleton h-20 w-24"></div>
             ) : (
               ahente.name
             )}
-          </td>
-          <td>
+          </span>
+          <span>
             {isLoading || isPending ? (
               <div className="skeleton h-20 w-24"></div>
             ) : (
               ahente.company
             )}
-          </td>
-          <td>
+          </span>
+          <span>
             {isLoading || isPending ? (
               <div className="skeleton h-20 w-24"></div>
             ) : (
               ahente.contact
             )}
-          </td>
-        </tr>
+          </span>
+        </Table.Row>
       ))}
-    </tbody>
+    </Table.Body>
   );
 };
 

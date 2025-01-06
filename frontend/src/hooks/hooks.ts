@@ -1,5 +1,5 @@
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
-import { ID, User } from "../types/types";
+import { Ahente, ID, User } from "../types/types";
 import { client } from "../api/client";
 import toast from "react-hot-toast";
 import { useNavigate } from "react-router-dom";
@@ -50,9 +50,38 @@ const useGetAhentes = (id: string) => {
   });
 };
 
+const useRegisterAhente = (
+  id: string,
+  onSuccess?: () => void,
+  onError?: () => void
+) => {
+  const queryClient = useQueryClient();
+  return useMutation({
+    mutationFn: (ahente: Ahente) => client.registerAhente(ahente, id),
+    onError: (error) => {
+      toast.error(error.message);
+      onError?.();
+    },
+    onSuccess: (data) => {
+      toast.success(data.message);
+      queryClient.invalidateQueries({ queryKey: ["ahentes"] });
+      onSuccess?.();
+    },
+  });
+};
+
+const useGetAhente = (ahenteId: string) => {
+  return useQuery({
+    queryKey: ["ahente"],
+    queryFn: () => client.viewAhente(ahenteId),
+  });
+};
+
 export const hooks = {
   useRegisterUser,
   useLoginUser,
   useGetUserInfo,
   useGetAhentes,
+  useRegisterAhente,
+  useGetAhente,
 };
