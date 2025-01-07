@@ -1,18 +1,39 @@
 import React from "react";
 import { ModalType } from "../../types/types";
-import { Button, Modal } from "@material-tailwind/react";
+import {
+  Button,
+  Dialog,
+  DialogBody,
+  DialogFooter,
+  DialogHeader,
+} from "@material-tailwind/react";
+import { PenIcon } from "lucide-react";
 
 const EditAhente = ({ visible, toggleVisible }: ModalType) => {
   return (
-    <Modal.Legacy open={visible}>
-      <Modal.Header>Edit Ahente</Modal.Header>
-      <Modal.Body></Modal.Body>
+    <Dialog open={visible} handler={toggleVisible}>
+      <DialogHeader>Edit Ahente</DialogHeader>
+      <DialogBody>
+        <>{visible}</>
+      </DialogBody>
 
-      <Modal.Actions className="flex gap-2 justify-end">
-        <Button onClick={() => toggleVisible(!visible)}>Close</Button>
-        <Button>Edit</Button>
-      </Modal.Actions>
-    </Modal.Legacy>
+      <DialogFooter className="flex gap-2 justify-end">
+        <Button
+          variant="text"
+          color="red"
+          onClick={() => toggleVisible(!visible)}
+        >
+          Close
+        </Button>
+        <Button
+          className="flex flex-row-reverse gap-2 items-center"
+          color="green"
+        >
+          <PenIcon size={15} />
+          Edit
+        </Button>
+      </DialogFooter>
+    </Dialog>
   );
 };
 

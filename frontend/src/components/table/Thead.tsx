@@ -1,15 +1,9 @@
+import { Typography } from "@material-tailwind/react";
 import React from "react";
-import { Table } from "@material-tailwind/react";
+import { TheadContent } from "../../types/types";
 
-const Thead = () => {
-  return (
-    <Table.Head>
-      <span></span>
-      <span>Name</span>
-      <span>Comapny</span>
-      <span>Contact</span>
-    </Table.Head>
-  );
+const Thead = ({ content }: TheadContent) => {
+  return <>{content}</>;
 };
 
 export default Thead;

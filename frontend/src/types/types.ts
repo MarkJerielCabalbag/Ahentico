@@ -25,3 +25,17 @@ export type ModalType = {
   visible: boolean;
   toggleVisible: (open: boolean) => void;
 };
+
+export type TableProps = {
+  tableHeader: React.ReactNode;
+  tableBody: React.ReactNode;
+  tableFooter?: React.ReactNode;
+};
+
+export type TheadContent = {
+  content: React.ReactNode;
+};
+
+export type TbodyContent = {
+  content: React.ReactNode;
+};

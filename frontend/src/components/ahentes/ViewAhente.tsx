@@ -7,20 +7,13 @@ import EditAhente from "../modals/EditAhente";
 import RemoveAhente from "../modals/RemoveAhente";
 
 const ViewAhente = () => {
-  const { id, ahenteId } = useParams();
+  const { id, ahenteId } = useParams<{ id: string; ahenteId: string }>();
 
-  const [showModals, setShowModals] = useState({
-    editModal: false,
-    deleteModal: false,
-  });
+  const [openEditModal, setOpenEditModal] = useState<boolean>(false);
 
-  const toggleEditAhenteModal = () =>
-    setShowModals({ ...showModals, editModal: true });
+  const toggleEditModal = () => setOpenEditModal(!openEditModal);
 
-  const toggleDeleteAhenteModal = () =>
-    setShowModals({ ...showModals, deleteModal: true });
-
-  const { data } = hooks.useGetAhente(ahenteId);
+  const { data } = hooks.useGetAhente(ahenteId as string);
 
   return (
     <div>
@@ -53,33 +46,14 @@ const ViewAhente = () => {
         </div>
 
         <div className="flex gap-2 justify-end">
-          <Button
-            className="filled"
-            color="blue"
-            onClick={() => setShowModals({ ...showModals, editModal: true })}
-          >
+          <Button color="blue" onClick={toggleEditModal}>
             Edit Ahente
           </Button>
-          <Button
-            className="bg-red-500 text-white"
-            onClick={() => setShowModals({ ...showModals, deleteModal: true })}
-          >
-            Delete Ahente
-          </Button>
+          <Button className="bg-red-500 text-white">Delete Ahente</Button>
         </div>
 
         <div>
-          <EditAhente
-            visible={showModals.editModal}
-            toggleVisible={toggleEditAhenteModal}
-          />
-
-          {showModals.deleteModal && (
-            <RemoveAhente
-              visible={showModals.deleteModal}
-              toggleVisible={toggleDeleteAhenteModal}
-            />
-          )}
+          <EditAhente visible={openEditModal} toggleVisible={toggleEditModal} />
         </div>
       </div>
     </div>

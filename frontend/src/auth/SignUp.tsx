@@ -4,7 +4,6 @@ import { useState } from "react";
 import React from "react";
 import { hooks } from "../hooks/hooks";
 import { Button, Input } from "@material-tailwind/react";
-import type { InputProps } from "@material-tailwind/react";
 
 const SignUp = () => {
   const [user, setUser] = useState<User>({
