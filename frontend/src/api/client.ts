@@ -102,4 +102,40 @@ export const client = {
       return response;
     });
   },
+
+  //edit ahente
+  async editAhente(
+    { name, company, contact, productCoverage }: Ahente,
+    id: String
+  ) {
+    return await fetch(`${baseUrl}/ahente/edit/${id}`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ name, company, contact, productCoverage }),
+    }).then(async (res) => {
+      const response = await res.json();
+
+      if (!res.ok) {
+        throw new Error(response.message || "An Error Occured");
+      }
+
+      return response;
+    });
+  },
+
+  //remove ahente
+  async removeAhente(id: String) {
+    return await fetch(`${baseUrl}/ahente/del/${id}`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+    }).then(async (res) => {
+      const response = await res.json();
+
+      if (!res.ok) {
+        throw new Error(response.message || "An Error Occured");
+      }
+
+      return response;
+    });
+  },
 };

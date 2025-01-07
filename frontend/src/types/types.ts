@@ -10,7 +10,7 @@ export type Ahente = {
   id?: number;
   name: string;
   company: string;
-  contact: string;
+  contact: number | undefined;
   productCoverage: string;
   userId?: number;
 };

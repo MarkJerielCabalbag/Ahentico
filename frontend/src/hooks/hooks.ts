@@ -77,6 +77,46 @@ const useGetAhente = (ahenteId: string) => {
   });
 };
 
+const useEditAhente = (
+  id: string,
+  onSuccess?: () => void,
+  onError?: () => void
+) => {
+  const queryClient = useQueryClient();
+  return useMutation({
+    mutationFn: (ahente: Ahente) => client.editAhente(ahente, id),
+    onError: (error) => {
+      toast.error(error.message);
+      onError?.();
+    },
+    onSuccess: (data) => {
+      toast.success(data.message);
+      queryClient.invalidateQueries({ queryKey: ["ahentes"] });
+      onSuccess?.();
+    },
+  });
+};
+
+const useRemoveAhente = (
+  id: string,
+  onSuccess?: () => void,
+  onError?: () => void
+) => {
+  const queryClient = useQueryClient();
+  return useMutation({
+    mutationFn: () => client.removeAhente(id),
+    onError: (error) => {
+      toast.error(error.message);
+      onError?.();
+    },
+    onSuccess: (data) => {
+      toast.success(data.message);
+      queryClient.invalidateQueries({ queryKey: ["ahentes"] });
+      onSuccess?.();
+    },
+  });
+};
+
 export const hooks = {
   useRegisterUser,
   useLoginUser,
@@ -84,4 +124,6 @@ export const hooks = {
   useGetAhentes,
   useRegisterAhente,
   useGetAhente,
+  useEditAhente,
+  useRemoveAhente,
 };
