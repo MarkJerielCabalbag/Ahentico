@@ -1,3 +1,4 @@
+import { AccessorKeyColumnDef, ColumnDef } from "@tanstack/react-table";
 import React from "react";
 
 export type User = {
@@ -10,7 +11,7 @@ export type Ahente = {
   id?: number;
   name: string;
   company: string;
-  contact: number | undefined;
+  contact: string;
   productCoverage: string;
   userId?: number;
 };
@@ -26,16 +27,11 @@ export type ModalType = {
   toggleVisible: (open: boolean) => void;
 };
 
-export type TableProps = {
-  tableHeader: React.ReactNode;
-  tableBody: React.ReactNode;
+export type TableProps<T> = {
+  tableHeader?: React.ReactNode;
+  tableBody?: React.ReactNode;
   tableFooter?: React.ReactNode;
-};
-
-export type TheadContent = {
-  content: React.ReactNode;
-};
-
-export type TbodyContent = {
-  content: React.ReactNode;
+  to?: string;
+  data?: T[];
+  column?: AccessorKeyColumnDef<T>[];
 };

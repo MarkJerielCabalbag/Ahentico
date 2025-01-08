@@ -53,19 +53,15 @@ const editAhente = asyncHandler(async (req, res, next) => {
     return res.status(400).json({ message: "Id does not exist" });
   }
 
-  if (!name || !company || !contact || !productCoverage) {
-    return res.status(400).json({ message: "Fill atleast one field" });
-  }
-
   const ahente = await prisma.ahente.update({
     where: {
       id: parseInt(ahenteId),
     },
     data: {
-      name: name,
-      company: req.body.company || company,
-      contact: parseInt(req.body.contact) || contact,
-      productCoverage: req.body.productCoverage || productCoverage,
+      name: req.body.name || undefined,
+      company: req.body.company || undefined,
+      contact: parseInt(req.body.contact) || undefined,
+      productCoverage: req.body.productCoverage || undefined,
     },
   });
 

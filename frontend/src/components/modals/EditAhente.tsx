@@ -18,7 +18,7 @@ const EditAhente = ({ visible, toggleVisible }: ModalType) => {
   const [ahente, setNewAhente] = useState<Ahente>({
     name: "",
     company: "",
-    contact: undefined,
+    contact: "",
     productCoverage: "",
   });
 
@@ -38,7 +38,7 @@ const EditAhente = ({ visible, toggleVisible }: ModalType) => {
         Edit Ahente
       </DialogHeader>
       <DialogBody>
-        {openAlert && (
+        {openAlert && isError && (
           <Alert
             color="red"
             icon={<CircleAlert />}
@@ -126,7 +126,7 @@ const EditAhente = ({ visible, toggleVisible }: ModalType) => {
               setNewAhente({
                 name: "",
                 company: "",
-                contact: undefined,
+                contact: "",
                 productCoverage: "",
               });
 

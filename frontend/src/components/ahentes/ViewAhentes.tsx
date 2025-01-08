@@ -1,17 +1,21 @@
 import { User } from "lucide-react";
-import Thead from "../table/Thead";
-import Tbody from "../table/Tbody";
 import { useState } from "react";
 import AddAhente from "../modals/AddAhente";
 import { Button } from "@material-tailwind/react";
-import { Table } from "../Table";
-import AhenteHeader from "../table/TheadContents/AhenteHeader";
-import AhenteBody from "../table/TbodyContents/AhenteBody";
+import DataTable from "../table/DataTable";
+import { useNavigate, useParams } from "react-router-dom";
+import { hooks } from "../../hooks/hooks";
+import { ahenteColumn } from "../../hooks/useTable";
+import { Ahente } from "../../types/types";
 const ViewAhentes = () => {
   const [visible, setVisible] = useState<boolean>(false);
   const toggleVisible = () => {
     setVisible(!visible);
   };
+  const navigate = useNavigate();
+  const { id } = useParams<{ id: string }>();
+  const { data, isLoading, isPending } = hooks.useGetAhentes(id as string);
+  const ahenteId = data?.map((ahente: Ahente) => ahente.id).toString();
 
   return (
     <div>
@@ -31,9 +35,10 @@ const ViewAhentes = () => {
 
       {visible && <AddAhente visible={visible} toggleVisible={toggleVisible} />}
 
-      <Table
-        tableHeader={<Thead content={<AhenteHeader />} />}
-        tableBody={<Tbody content={<AhenteBody />} />}
+      <DataTable
+        data={data}
+        to={`/ahente/${id}/profile/${ahenteId}`}
+        column={ahenteColumn}
       />
     </div>
   );
