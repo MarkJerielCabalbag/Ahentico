@@ -28,7 +28,8 @@ const EditAhente = ({ visible, toggleVisible }: ModalType) => {
     setNewAhente({ ...ahente, [e.target.name]: e.target.value });
 
   const { mutateAsync, isPending, isError, error } = hooks.useEditAhente(
-    ahenteId as string
+    ahenteId as string,
+    () => toggleVisible(!visible)
   );
 
   return (
@@ -120,6 +121,12 @@ const EditAhente = ({ visible, toggleVisible }: ModalType) => {
           color="green"
           onClick={async () => {
             try {
+              setNewAhente({
+                name: "",
+                company: "",
+                contact: "",
+                productCoverage: "",
+              });
               await mutateAsync(ahente);
             } catch (error) {
               console.log(error);

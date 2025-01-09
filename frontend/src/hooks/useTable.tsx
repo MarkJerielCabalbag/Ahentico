@@ -28,3 +28,35 @@ export const ahenteColumn = [
     cell: (info) => <p>{info.getValue()}</p>,
   }),
 ];
+
+export const productColumn = [
+  columnHelper.accessor("productName", {
+    id: "productName",
+    header: "Product Name",
+    cell: (info) => <p>{info.getValue()}</p>,
+  }),
+
+  columnHelper.accessor("productCategory", {
+    id: "productCategory",
+    header: "Product Category",
+    cell: (info) => <p>{info.getValue()}</p>,
+  }),
+
+  columnHelper.accessor("productUnitMeasurement", {
+    id: "productUnitMeasurement",
+    header: "Unit Measurement",
+    cell: (info) => <p>{info.getValue()}</p>,
+  }),
+
+  columnHelper.accessor("productUnit", {
+    id: "productUnit",
+    header: "Unit",
+    cell: (info) => <p>{info.getValue()}</p>,
+  }),
+
+  columnHelper.accessor("productPricePerUnit", {
+    id: "productPricePerUnit",
+    header: "Price",
+    cell: (info) => <p>{info.getValue()}</p>,
+  }),
+];

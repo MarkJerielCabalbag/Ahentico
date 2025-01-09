@@ -91,7 +91,7 @@ const useEditAhente = (
     },
     onSuccess: (data) => {
       toast.success(data.message);
-      queryClient.invalidateQueries({ queryKey: ["ahentes"] });
+      queryClient.invalidateQueries({ queryKey: ["ahente"] });
       onSuccess?.();
     },
   });
@@ -117,6 +117,19 @@ const useRemoveAhente = (
   });
 };
 
+const useGetProducts = (id: string) => {
+  return useQuery({
+    queryKey: ["products"],
+    queryFn: () => client.viewProducts(id),
+  });
+};
+
+const useGetProductCategories = (id: string) => {
+  return useQuery({
+    queryKey: ["category"],
+    queryFn: () => client.viewCategories(id),
+  });
+};
 export const hooks = {
   useRegisterUser,
   useLoginUser,
@@ -126,4 +139,6 @@ export const hooks = {
   useGetAhente,
   useEditAhente,
   useRemoveAhente,
+  useGetProducts,
+  useGetProductCategories,
 };

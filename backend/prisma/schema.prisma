@@ -19,6 +19,7 @@ model User {
   username String 
   password String 
   ahentes Ahente[]
+  productCategories ProductCategory[]
 }
 
 model Ahente {
@@ -30,6 +31,13 @@ model Ahente {
   addedBy User  @relation(fields: [userId], references: [id])
   userId Int
   products Product[]
+}
+
+model ProductCategory {
+  id Int @id @default(autoincrement())
+  category String 
+  addedBy User  @relation(fields: [userId], references: [id])
+  userId Int
 }
 
 model Product{

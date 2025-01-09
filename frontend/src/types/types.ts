@@ -27,6 +27,11 @@ export type ModalType = {
   toggleVisible: (open: boolean) => void;
 };
 
+export type PaginationProps = {
+  pageSize?: number;
+  pageIndex?: number;
+};
+
 export type TableProps<T> = {
   tableHeader?: React.ReactNode;
   tableBody?: React.ReactNode;
@@ -34,4 +39,23 @@ export type TableProps<T> = {
   to?: string;
   data?: T[];
   column?: AccessorKeyColumnDef<T>[];
+
+  setPagination: (prev: PaginationProps) => void;
+  rowLength: number;
+};
+
+export type ProductType = {
+  id?: number;
+  productName: string;
+  productCategory: string;
+  productUnitMeasurement: string;
+  productUnit: number;
+  productPricePerUnit: number;
+  productDescription: string;
+  ahenteId?: number;
+};
+
+export type ProductCategory = {
+  id?: number;
+  category: string;
 };

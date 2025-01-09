@@ -69,7 +69,7 @@ const registerProduct = asyncHandler(async (req, res, next) => {
     });
 
     return res.status(200).json({
-      message: `Product ${newProduct.productName} has been added to the list of products of distributor: ${findAhente.name}`,
+      message: `Product ${newProduct.productName} has been added to the list of products of distributor: ${ahente.name}`,
     });
   }
 

@@ -138,4 +138,36 @@ export const client = {
       return response;
     });
   },
+
+  //view products associated with ahente
+  async viewProducts(ahenteId: string) {
+    return await fetch(`${baseUrl}/product/list/${ahenteId}}`, {
+      method: "GET",
+      headers: { "Content-Type": "application/json" },
+    }).then(async (res) => {
+      const response = await res.json();
+
+      if (!res.ok) {
+        throw new Error(response.message || "An Error Occured");
+      }
+
+      return response;
+    });
+  },
+
+  //view product category associated with user
+  async viewCategories(id: string) {
+    return await fetch(`${baseUrl}/category/view/${id}}`, {
+      method: "GET",
+      headers: { "Content-Type": "application/json" },
+    }).then(async (res) => {
+      const response = await res.json();
+
+      if (!res.ok) {
+        throw new Error(response.message || "An Error Occured");
+      }
+
+      return response;
+    });
+  },
 };
