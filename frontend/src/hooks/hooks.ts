@@ -1,5 +1,5 @@
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
-import { Ahente, ID, ProductType, User } from "../types/types";
+import { Ahente, ID, ProductCategory, ProductType, User } from "../types/types";
 import { client } from "../api/client";
 import toast from "react-hot-toast";
 import { useNavigate } from "react-router-dom";
@@ -192,6 +192,48 @@ const useEditProduct = (
     },
   });
 };
+
+const useAddProductCategory = (
+  userId: string,
+  onSuccess?: () => void,
+  onError?: () => void
+) => {
+  const queryClient = useQueryClient();
+  return useMutation({
+    mutationFn: (category: ProductCategory) =>
+      client.registerCategory(userId, category),
+    onError: (error) => {
+      toast.error(error.message);
+      onError?.();
+    },
+    onSuccess: (data) => {
+      toast.success(data.message);
+      queryClient.invalidateQueries({ queryKey: ["category"] });
+      onSuccess?.();
+    },
+  });
+};
+
+const useRemoveProductCategory = (
+  categoryId: number,
+  onSuccess?: () => void,
+  onError?: () => void
+) => {
+  const queryClient = useQueryClient();
+  return useMutation({
+    mutationFn: () => client.removeCategory(categoryId),
+    onError: (error) => {
+      toast.error(error.message);
+      onError?.();
+    },
+    onSuccess: (data) => {
+      toast.success(data.message);
+      queryClient.invalidateQueries({ queryKey: ["category"] });
+      onSuccess?.();
+    },
+  });
+};
+
 export const hooks = {
   useRegisterUser,
   useLoginUser,
@@ -206,4 +248,6 @@ export const hooks = {
   useRegisterProduct,
   useRemoveProduct,
   useEditProduct,
+  useAddProductCategory,
+  useRemoveProductCategory,
 };

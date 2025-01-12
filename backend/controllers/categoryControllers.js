@@ -74,4 +74,28 @@ const viewCategory = asyncHandler(async (req, res, next) => {
   return res.status(200).send(productCategory);
 });
 
-export default { registerCategory, viewCategory };
+//@DESC     Remove category associated with a user
+//@ROUTE    POST /api/agentify/category/remove/cetgoryId
+//@ACCESS   private
+const removeCategory = asyncHandler(async (req, res, next) => {
+  const { categoryId } = req.params;
+
+  if (!categoryId) {
+    return res.status(400).json({ message: "ID does not exist" });
+  }
+
+  try {
+    const productCategory = await prisma.productCategory.delete({
+      where: {
+        id: parseInt(categoryId),
+      },
+    });
+    return res.status(200).json({
+      message: `${productCategory.category} is already remove as a product category`,
+    });
+  } catch (error) {
+    console.log(error);
+  }
+});
+
+export default { registerCategory, viewCategory, removeCategory };

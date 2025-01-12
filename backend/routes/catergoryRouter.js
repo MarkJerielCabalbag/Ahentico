@@ -1,5 +1,5 @@
 import express from "express";
-import categoryControllers from "../controllers/categoryCOntrollers.js";
+import categoryControllers from "../controllers/categoryControllers.js";
 
 const categoryRouter = express.Router();
 
@@ -10,6 +10,6 @@ categoryRouter.post("/register/:id", categoryControllers.registerCategory);
 categoryRouter.get("/view/:id", categoryControllers.viewCategory);
 
 //remove category
-categoryRouter.post("/remove/:id/:categoryId");
+categoryRouter.post("/remove/:categoryId", categoryControllers.removeCategory);
 
 export default categoryRouter;

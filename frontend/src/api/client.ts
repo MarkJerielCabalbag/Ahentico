@@ -1,4 +1,4 @@
-import { Ahente, ProductType, User } from "../types/types";
+import { Ahente, ProductCategory, ProductType, User } from "../types/types";
 
 const baseUrl = "http://localhost:3000/api/agentify";
 
@@ -244,6 +244,39 @@ export const client = {
         productUnit,
         productUnitMeasurement,
       }),
+    }).then(async (res) => {
+      const response = await res.json();
+
+      if (!res.ok) {
+        throw new Error(response.message || "An Error Occured");
+      }
+
+      return response;
+    });
+  },
+
+  //register product category associated with user
+  async registerCategory(userId: string, { category }: ProductCategory) {
+    return await fetch(`${baseUrl}/category/register/${userId}`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ category }),
+    }).then(async (res) => {
+      const response = await res.json();
+
+      if (!res.ok) {
+        throw new Error(response.message || "An Error Occured");
+      }
+
+      return response;
+    });
+  },
+
+  //remove product category associated with user
+  async removeCategory(id: number) {
+    return await fetch(`${baseUrl}/category/remove/${id}`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
     }).then(async (res) => {
       const response = await res.json();
 

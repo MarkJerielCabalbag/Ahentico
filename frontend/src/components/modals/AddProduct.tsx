@@ -11,19 +11,31 @@ import {
 } from "@material-tailwind/react";
 import React, { useState } from "react";
 import { ModalType, ProductCategory, ProductType } from "../../types/types";
-import { CircleAlert, Plus } from "lucide-react";
+import { CircleAlert, MinusCircle, Plus } from "lucide-react";
 import { hooks } from "../../hooks/hooks";
 import { useParams } from "react-router-dom";
+import AddProductCategory from "./AddProductCategory";
+import RemoveProductCategory from "./RemoveProductCategory";
 
 const AddProduct = ({ visible, toggleVisible }: ModalType) => {
   const [product, setProduct] = useState<ProductType>({
     productName: "",
-    productCategory: "",
+    productCategory: "Please select category",
     productUnitMeasurement: "",
     productUnit: 0,
     productPricePerUnit: 0,
     productDescription: "",
   });
+
+  const [selectedCategory, setSelectedCategory] = useState<number>(0);
+  const [openDeleteCategory, setOpenDeleteCategory] = useState<boolean>(false);
+
+  const handleDeleteCategory = (categoryId: number, open: boolean) => {
+    setSelectedCategory(categoryId);
+    setOpenDeleteCategory(!open);
+  };
+
+  const [openAddCategory, setOpenAddCategory] = useState<boolean>(false);
 
   const { id, ahenteId } = useParams();
 
@@ -40,7 +52,17 @@ const AddProduct = ({ visible, toggleVisible }: ModalType) => {
   const [openAlert, setOpenAlert] = useState<boolean>(false);
 
   return (
-    <Dialog open={visible} handler={toggleVisible}>
+    <Dialog size="sm" tabIndex={1} open={visible} handler={toggleVisible}>
+      <AddProductCategory
+        visible={openAddCategory}
+        toggleVisible={setOpenAddCategory}
+      />
+      <RemoveProductCategory
+        visible={openDeleteCategory}
+        toggleVisible={setOpenDeleteCategory}
+        categoryId={selectedCategory}
+      />
+
       <DialogHeader>Register Product</DialogHeader>
       <DialogBody>
         {openAlert && isError && (
@@ -83,18 +105,37 @@ const AddProduct = ({ visible, toggleVisible }: ModalType) => {
 
             <Select
               label="Select Category"
-              value={product?.productCategory}
+              value={product.productCategory}
               onChange={(value: string | undefined) =>
                 setProduct({ ...product, productCategory: value || "" })
               }
             >
+              <Option value="Please select category">
+                Please select category
+              </Option>
+
               {category?.map((category: ProductCategory) => (
-                <Option key={category.id} value={category.category}>
-                  {category.category}
-                </Option>
+                <div className="flex gap-2 items-center">
+                  <Option
+                    className="w-full "
+                    key={category.id}
+                    value={category.category}
+                  >
+                    {category.category}
+                  </Option>
+                  <MinusCircle
+                    onClick={() =>
+                      handleDeleteCategory(
+                        category.id as number,
+                        openDeleteCategory
+                      )
+                    }
+                  />
+                </div>
               ))}
+
               <Button
-                onClick={() => console.log("Register new category")}
+                onClick={() => setOpenAddCategory(!openAddCategory)}
                 className="flex gap-2 items-center w-full"
               >
                 <Plus />
