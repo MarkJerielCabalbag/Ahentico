@@ -1,7 +1,9 @@
 import { useState } from "react";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { hooks } from "../../hooks/hooks";
 import {
+  ArrowBigLeft,
+  ArrowLeft,
   Building,
   Contact,
   Edit,
@@ -39,8 +41,9 @@ const ViewAhente = () => {
 
   const { data } = hooks.useGetAhente(ahenteId as string);
 
+  const navigate = useNavigate();
+
   const { data: products } = hooks.useGetProducts(ahenteId as string);
-  console.log(products);
 
   return (
     <div>
@@ -52,81 +55,85 @@ const ViewAhente = () => {
         />
       }
       {<AddProduct visible={openAddModal} toggleVisible={setOpenAddModal} />}
-      <Card>
-        <CardHeader floated={false} shadow={false} className="rounded-none">
-          <div className="flex justify-between items-center">
-            <Typography
-              variant="h5"
-              color="black"
-              className="flex gap-2 items-center"
-            >
-              <User className="h4 w-4" />
-              {data?.name}
-            </Typography>
 
-            <div className="flex items-center gap-2">
-              <Popover>
-                <PopoverHandler>
-                  <Button variant="outlined">Settings</Button>
-                </PopoverHandler>
-                <PopoverContent className="flex flex-col gap-2">
-                  <Button
-                    color="blue"
-                    className="flex gap-2 items-center"
-                    variant="text"
-                    onClick={toggleEditModal}
-                  >
-                    <Edit />
-                    Edit Ahente
-                  </Button>
-                  <Button
-                    className="flex gap-2 items-center"
-                    color="red"
-                    variant="text"
-                    onClick={toggleRemoveModal}
-                  >
-                    <Trash />
-                    Delete Ahente
-                  </Button>
-                </PopoverContent>
-              </Popover>
+      <DataTable
+        tableHeader={
+          <>
+            <div className="flex mb-8 justify-between items-center">
+              <Typography
+                variant="h5"
+                color="black"
+                className="flex gap-2 items-center"
+              >
+                <ArrowLeft onClick={() => navigate(`/ahente/${id}`)} />
+                {data?.name}
+              </Typography>
 
-              <Button onClick={() => setOpenAddModal(!openAddModal)}>
-                Register New Product
-              </Button>
-            </div>
-          </div>
+              <div className="flex items-center gap-2">
+                <Popover>
+                  <PopoverHandler>
+                    <Button variant="outlined">Settings</Button>
+                  </PopoverHandler>
+                  <PopoverContent className="flex flex-col gap-2">
+                    <Button
+                      color="blue"
+                      className="flex gap-2 items-center"
+                      variant="text"
+                      onClick={toggleEditModal}
+                    >
+                      <Edit />
+                      Edit Ahente
+                    </Button>
+                    <Button
+                      className="flex gap-2 items-center"
+                      color="red"
+                      variant="text"
+                      onClick={toggleRemoveModal}
+                    >
+                      <Trash />
+                      Delete Ahente
+                    </Button>
+                  </PopoverContent>
+                </Popover>
 
-          <div className="grid grid-cols-3 gap-2 my-5">
-            <div className="flex gap-2 items-center p-3 bg-black text-white rounded-md">
-              <Building size={50} />
-              <div>
-                <p className="font-bold">{data?.company}</p>
-                <h1 className="italic opacity-75 text-md">Company</h1>
+                <Button onClick={() => setOpenAddModal(!openAddModal)}>
+                  Register New Product
+                </Button>
               </div>
             </div>
 
-            <div className=" flex gap-2 items-center  p-3 bg-black text-white rounded-md">
-              <Contact size={50} />
-              <div>
-                <p className="font-bold">{data?.contact}</p>
-                <h1 className="italic opacity-75 text-md">Contact</h1>
+            <div className="grid grid-cols-3 gap-2 my-5">
+              <div className="flex gap-2 items-center p-3 bg-black text-white rounded-md">
+                <Building size={50} />
+                <div>
+                  <p className="font-bold">{data?.company}</p>
+                  <h1 className="italic opacity-75 text-md">Company</h1>
+                </div>
               </div>
-            </div>
 
-            <div className=" flex gap-2 items-center  p-3 bg-black text-white rounded-md">
-              <ShoppingCart size={50} />
-              <div>
-                <p className="font-bold">{data?.productCoverage}</p>
-                <h1 className="italic opacity-75 text-md">Product Coverage</h1>
+              <div className=" flex gap-2 items-center  p-3 bg-black text-white rounded-md">
+                <Contact size={50} />
+                <div>
+                  <p className="font-bold">{data?.contact}</p>
+                  <h1 className="italic opacity-75 text-md">Contact</h1>
+                </div>
+              </div>
+
+              <div className=" flex gap-2 items-center  p-3 bg-black text-white rounded-md">
+                <ShoppingCart size={50} />
+                <div>
+                  <p className="font-bold">{data?.productCoverage}</p>
+                  <h1 className="italic opacity-75 text-md">
+                    Product Coverage
+                  </h1>
+                </div>
               </div>
             </div>
-          </div>
-        </CardHeader>
-        <CardBody>
-          <DataTable data={products} column={productColumn} />
-        </CardBody>
-      </Card>
+          </>
+        }
+        data={products}
+        column={productColumn}
+      />
     </div>
   );
 };

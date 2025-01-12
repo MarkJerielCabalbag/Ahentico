@@ -1,4 +1,4 @@
-import { Ahente, User } from "../types/types";
+import { Ahente, ProductType, User } from "../types/types";
 
 const baseUrl = "http://localhost:3000/api/agentify";
 
@@ -156,10 +156,94 @@ export const client = {
   },
 
   //view product category associated with user
-  async viewCategories(id: string) {
-    return await fetch(`${baseUrl}/category/view/${id}}`, {
+  async viewCategories(ahenteId: string) {
+    return await fetch(`${baseUrl}/category/view/${ahenteId}}`, {
       method: "GET",
       headers: { "Content-Type": "application/json" },
+    }).then(async (res) => {
+      const response = await res.json();
+
+      if (!res.ok) {
+        throw new Error(response.message || "An Error Occured");
+      }
+
+      return response;
+    });
+  },
+
+  //register a product associated with ahente
+  async registerProduct(
+    id: string,
+    {
+      productName,
+      productCategory,
+      productDescription,
+      productPricePerUnit,
+      productUnit,
+      productUnitMeasurement,
+    }: ProductType
+  ) {
+    return await fetch(`${baseUrl}/product/register/${id}}`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        productName,
+        productCategory,
+        productDescription,
+        productPricePerUnit,
+        productUnit,
+        productUnitMeasurement,
+      }),
+    }).then(async (res) => {
+      const response = await res.json();
+
+      if (!res.ok) {
+        throw new Error(response.message || "An Error Occured");
+      }
+
+      return response;
+    });
+  },
+
+  //remove product associated with ahente
+  async removeProduct(productId: string) {
+    return await fetch(`${baseUrl}/product/remove/${productId}`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+    }).then(async (res) => {
+      const response = await res.json();
+
+      if (!res.ok) {
+        throw new Error(response.message || "An Error Occured");
+      }
+
+      return response;
+    });
+  },
+
+  //edit product associated with ahente
+  async editProduct(
+    productId: string,
+    {
+      productName,
+      productCategory,
+      productDescription,
+      productPricePerUnit,
+      productUnit,
+      productUnitMeasurement,
+    }: ProductType
+  ) {
+    return await fetch(`${baseUrl}/product/edit/${productId}`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        productName,
+        productCategory,
+        productDescription,
+        productPricePerUnit,
+        productUnit,
+        productUnitMeasurement,
+      }),
     }).then(async (res) => {
       const response = await res.json();
 

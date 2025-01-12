@@ -151,14 +151,13 @@ const editProduct = asyncHandler(async (req, res, next) => {
         id: parseInt(productId),
       },
       data: {
-        productName: req.body.productName || productName,
-        productCategory: req.body.productCategory || productCategory,
-        productUnit: parseInt(req.body.productUnit) || parseInt(productUnit),
-        productUnitMeasurement:
-          req.body.productUnitMeasurement || productUnitMeasurement,
+        productName: req.body.productName || undefined,
+        productCategory: req.body.productCategory || undefined,
+        productUnit: parseInt(req.body.productUnit) || undefined,
+        productUnitMeasurement: req.body.productUnitMeasurement || undefined,
         productPricePerUnit:
-          parseInt(req.body.productPricePerUnit) || productPricePerUnit,
-        productDescription: req.body.productDescription || productDescription,
+          parseInt(req.body.productPricePerUnit) || undefined,
+        productDescription: req.body.productDescription || undefined,
       },
     });
 

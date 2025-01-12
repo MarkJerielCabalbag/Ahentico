@@ -1,5 +1,5 @@
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
-import { Ahente, ID, User } from "../types/types";
+import { Ahente, ID, ProductType, User } from "../types/types";
 import { client } from "../api/client";
 import toast from "react-hot-toast";
 import { useNavigate } from "react-router-dom";
@@ -130,6 +130,68 @@ const useGetProductCategories = (id: string) => {
     queryFn: () => client.viewCategories(id),
   });
 };
+
+const useRegisterProduct = (
+  id: string,
+  onSuccess?: () => void,
+  onError?: () => void
+) => {
+  const queryClient = useQueryClient();
+  return useMutation({
+    mutationFn: (product: ProductType) => client.registerProduct(id, product),
+    onError: (error) => {
+      toast.error(error.message);
+      onError?.();
+    },
+    onSuccess: (data) => {
+      toast.success(data.message);
+      queryClient.invalidateQueries({ queryKey: ["products"] });
+
+      onSuccess?.();
+    },
+  });
+};
+
+const useRemoveProduct = (
+  productId: string,
+  onSuccess?: () => void,
+  onError?: () => void
+) => {
+  const queryClient = useQueryClient();
+  return useMutation({
+    mutationFn: () => client.removeProduct(productId),
+    onError: (error) => {
+      toast.error(error.message);
+      onError?.();
+    },
+    onSuccess: (data) => {
+      toast.success(data.message);
+      queryClient.invalidateQueries({ queryKey: ["products"] });
+      onSuccess?.();
+    },
+  });
+};
+
+const useEditProduct = (
+  productId: string,
+  onSuccess?: () => void,
+  onError?: () => void
+) => {
+  const queryClient = useQueryClient();
+  return useMutation({
+    mutationFn: (editedProduct: ProductType) =>
+      client.editProduct(productId, editedProduct),
+    onError: (error) => {
+      toast.error(error.message);
+      onError?.();
+    },
+    onSuccess: (data) => {
+      toast.success(data.message);
+      queryClient.invalidateQueries({ queryKey: ["products"] });
+      onSuccess?.();
+    },
+  });
+};
 export const hooks = {
   useRegisterUser,
   useLoginUser,
@@ -141,4 +203,7 @@ export const hooks = {
   useRemoveAhente,
   useGetProducts,
   useGetProductCategories,
+  useRegisterProduct,
+  useRemoveProduct,
+  useEditProduct,
 };

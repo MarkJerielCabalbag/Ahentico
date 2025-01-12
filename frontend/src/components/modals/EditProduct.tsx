@@ -1,22 +1,26 @@
+import React, { useState } from "react";
+import { ModalType, ProductCategory, ProductType } from "../../types/types";
 import {
-  Button,
   Dialog,
   DialogBody,
   DialogFooter,
   DialogHeader,
+  Button,
+  Alert,
   Input,
   Select,
   Option,
-  Alert,
 } from "@material-tailwind/react";
-import React, { useState } from "react";
-import { ModalType, ProductCategory, ProductType } from "../../types/types";
 import { CircleAlert, Plus } from "lucide-react";
 import { hooks } from "../../hooks/hooks";
 import { useParams } from "react-router-dom";
 
-const AddProduct = ({ visible, toggleVisible }: ModalType) => {
-  const [product, setProduct] = useState<ProductType>({
+type EditProductProps = ModalType & {
+  product: ProductType;
+};
+
+const EditProduct = ({ visible, toggleVisible, product }: EditProductProps) => {
+  const [editedProduct, setProduct] = useState<ProductType>({
     productName: "",
     productCategory: "",
     productUnitMeasurement: "",
@@ -27,21 +31,24 @@ const AddProduct = ({ visible, toggleVisible }: ModalType) => {
 
   const { id, ahenteId } = useParams();
 
-  const { mutateAsync, isPending, isError, error } = hooks.useRegisterProduct(
-    ahenteId as string,
-    () => toggleVisible(!visible)
+  const { mutateAsync } = hooks.useEditProduct(String(product.id), () =>
+    toggleVisible(!visible)
   );
 
-  const { data: category } = hooks.useGetProductCategories(id as string);
+  const {
+    data: category,
+    isError,
+    error,
+    isPending,
+  } = hooks.useGetProductCategories(id as string);
 
   const handleOnchange = (e: React.ChangeEvent<HTMLInputElement>) =>
-    setProduct({ ...product, [e.target.name]: e.target.value });
+    setProduct({ ...editedProduct, [e.target.name]: e.target.value });
 
   const [openAlert, setOpenAlert] = useState<boolean>(false);
-
   return (
     <Dialog open={visible} handler={toggleVisible}>
-      <DialogHeader>Register Product</DialogHeader>
+      <DialogHeader>Edit Product</DialogHeader>
       <DialogBody>
         {openAlert && isError && (
           <Alert
@@ -75,7 +82,7 @@ const AddProduct = ({ visible, toggleVisible }: ModalType) => {
             <Input
               type="text"
               name="productName"
-              value={product?.productName}
+              value={editedProduct?.productName}
               placeholder="Product Name"
               label="Product Name"
               onChange={handleOnchange}
@@ -83,9 +90,9 @@ const AddProduct = ({ visible, toggleVisible }: ModalType) => {
 
             <Select
               label="Select Category"
-              value={product?.productCategory}
+              value={editedProduct?.productCategory}
               onChange={(value: string | undefined) =>
-                setProduct({ ...product, productCategory: value || "" })
+                setProduct({ ...editedProduct, productCategory: value || "" })
               }
             >
               {category?.map((category: ProductCategory) => (
@@ -106,7 +113,7 @@ const AddProduct = ({ visible, toggleVisible }: ModalType) => {
           <Input
             type="text"
             name="productUnitMeasurement"
-            value={product?.productUnitMeasurement}
+            value={editedProduct?.productUnitMeasurement}
             placeholder="Product Unit Measurement"
             label="Product Unit Measurement"
             onChange={handleOnchange}
@@ -115,7 +122,7 @@ const AddProduct = ({ visible, toggleVisible }: ModalType) => {
           <Input
             type="number"
             name="productUnit"
-            value={product?.productUnit}
+            value={editedProduct?.productUnit}
             placeholder="Product Unit"
             label="Product Unit"
             onChange={handleOnchange}
@@ -124,7 +131,7 @@ const AddProduct = ({ visible, toggleVisible }: ModalType) => {
           <Input
             type="number"
             name="productPricePerUnit"
-            value={product?.productPricePerUnit}
+            value={editedProduct?.productPricePerUnit}
             placeholder="Product Price Per Unit"
             label="Product Price Per Unit"
             onChange={handleOnchange}
@@ -133,7 +140,7 @@ const AddProduct = ({ visible, toggleVisible }: ModalType) => {
           <Input
             type="text"
             name="productDescription"
-            value={product?.productDescription}
+            value={editedProduct?.productDescription}
             placeholder="Product Description"
             label="Product Description"
             onChange={handleOnchange}
@@ -154,7 +161,7 @@ const AddProduct = ({ visible, toggleVisible }: ModalType) => {
           loading={isPending}
           onClick={async () => {
             try {
-              await mutateAsync(product);
+              await mutateAsync(editedProduct);
               setProduct({
                 productName: "",
                 productCategory: "",
@@ -184,4 +191,4 @@ const AddProduct = ({ visible, toggleVisible }: ModalType) => {
   );
 };
 
-export default AddProduct;
+export default EditProduct;

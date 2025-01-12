@@ -18,7 +18,7 @@ const AddAhente = ({ visible, toggleVisible }: ModalType) => {
   const [ahente, setNewAhente] = useState<Ahente>({
     name: "",
     company: "",
-    contact: undefined,
+    contact: "",
     productCoverage: "",
   });
 
@@ -123,7 +123,7 @@ const AddAhente = ({ visible, toggleVisible }: ModalType) => {
               setNewAhente({
                 name: "",
                 company: "",
-                contact: undefined,
+                contact: "",
                 productCoverage: "",
               });
 
