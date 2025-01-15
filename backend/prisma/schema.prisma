@@ -20,6 +20,7 @@ model User {
   password String 
   ahentes Ahente[]
   productCategories ProductCategory[]
+  placeOrders Orders[]
 }
 
 model Ahente {
@@ -31,6 +32,7 @@ model Ahente {
   addedBy User  @relation(fields: [userId], references: [id])
   userId Int
   products Product[]
+  orders Orders[]
 }
 
 model ProductCategory {
@@ -50,6 +52,33 @@ model Product{
   productDescription String
   productDesignatedBy Ahente @relation(fields: [ahenteId], references: [id])
   ahenteId Int
+  totalStock Int @default(0)
+  productOrdered Order_Items[]
 }
 
 
+model Orders {
+    id Int @id @default(autoincrement())
+    placeOrderBy User @relation(fields: [userId], references: [id])
+    userId Int
+    ordersDesignatedTo Ahente @relation(fields: [ahenteId], references: [id])
+    ahenteId Int
+    status Order_status @default(PENDING)
+    createdAt DateTime
+    productsOrdered Order_Items[]
+}
+
+model Order_Items{
+     id Int @id @default(autoincrement())
+     listOfOrder Orders @relation(fields: [orderId], references: [id])
+     orderId Int
+     productOrdered Product @relation(fields: [productId], references: [id])
+     productId Int
+}
+
+
+enum Order_status {
+PENDING
+DELIVERED
+CANCELLED
+}

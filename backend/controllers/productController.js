@@ -233,6 +233,7 @@ const viewProduct = asyncHandler(async (req, res, next) => {
 
   return res.status(200).send(product);
 });
+
 export default {
   registerProduct,
   removeProduct,
