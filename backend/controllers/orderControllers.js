@@ -74,20 +74,18 @@ const orderItems = asyncHandler(async (req, res, next) => {
     return res.status(400).json({ message: "The placed order does not exist" });
   }
 
-  console.log(
-    productId.map((product) => ({
-      productId: product.id,
-      orderId: parseInt(orderId),
-    }))
-  );
+
 
   try {
-    await prisma.order_Items.createMany({
+    const items = await prisma.order_Items.createMany({
       data: productId.map((product) => ({
         productId: product.id,
         orderId: parseInt(orderId),
       })),
     });
+    if(items){
+      return res.status(200).json({message: 'The '})
+    }
   } catch (error) {
     console.log(error);
   }
